@@ -1,16 +1,9 @@
 import { spawn } from 'child_process';
 import type { langConfig } from './languages';
-
-interface result{
-    stdout:string,
-    stderr:string,
-    exitcode:number | null,
-    timeout:boolean
-    executionTimeMs:number
-}
+import type {Runresult} from "@collabcode/shared";
 
 
-export default function dockerRunner(tmpDir:string,langConfig:langConfig):Promise<result>{
+export default function dockerRunner(tmpDir:string,langConfig:langConfig):Promise<Runresult>{
 
     return new Promise((resolve, reject) => {
 

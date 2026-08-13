@@ -4,6 +4,6 @@ const codeRouter = Router();
 
 
 
-codeRouter.post("/api/run",handelrunCode)
+codeRouter.post("/run",handelrunCode)
 
 export default codeRouter
