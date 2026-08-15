@@ -3,9 +3,14 @@ import codeRouter from "./routes/code"
 import http from "http"
 import setupSocket from "./socket"
 import roomRouter from "./routes/room"
+import cors from "cors"
 
 
 const app=express()
+
+app.use(cors({
+   origin: "http://localhost:5173",
+}))
 
 const server = http.createServer(app);
 

@@ -7,14 +7,12 @@ const roomRouter = Router();
 
 roomRouter.post("/",(req,res)=>{
     const roomId = crypto.randomUUID().substring(2,15);
-    let { language } = req.body;
-    if (!language) {
-           language = "js";
-    }
+    const rawLanguage = req.body?.language ?? "javascript";
+    const language = rawLanguage === "js" ? "javascript" : rawLanguage === "ts" ? "typescript" : rawLanguage;
     const room:Room = {
         id:roomId,
         code:"", 
-        language:language,
+        language,
         users:new Set()  
     }
     rooms.set(roomId,room)

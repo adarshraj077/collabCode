@@ -6,7 +6,7 @@ import { rooms, runningRooms } from "@collabcode/shared";
 export default function setupSocket(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || "*",
+      origin: "http://localhost:5173",
     },
   });
 
@@ -107,9 +107,9 @@ export default function setupSocket(httpServer: HttpServer) {
             count: room.users.size,
           });
 
-          // Optional: clean up empty rooms
+          // Keep room data alive across refreshes/reconnects.
+          // If the room becomes empty, we do not delete it immediately.
           if (room.users.size === 0) {
-            rooms.delete(roomId);
             runningRooms.delete(roomId);
           }
         }
