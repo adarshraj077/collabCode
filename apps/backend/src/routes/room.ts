@@ -1,11 +1,11 @@
 import { Router } from "express";
 import type {Room} from "@collabcode/shared";
-import { rooms } from "@collabcode/shared";
 import crypto from "crypto";
+import {getRoom,setRoom, getUsersInRoom} from "../service/redis/room";
 
 const roomRouter = Router();
 
-roomRouter.post("/",(req,res)=>{
+roomRouter.post("/",async (req,res)=>{
     const roomId = crypto.randomUUID().substring(2,15);
     const rawLanguage = req.body?.language ?? "javascript";
     const language = rawLanguage === "js" ? "javascript" : rawLanguage === "ts" ? "typescript" : rawLanguage;
@@ -13,19 +13,21 @@ roomRouter.post("/",(req,res)=>{
         id:roomId,
         code:"", 
         language,
-        users:new Set()  
+        
     }
-    rooms.set(roomId,room)
+
+    await setRoom(roomId,room)
 
     return res.json(room)
 })
 
 
-roomRouter.get("/rooms/:roomId", (req, res) => {
+roomRouter.get("/rooms/:roomId", async (req, res) => {
     const roomId = req.params.roomId;
-    const room = rooms.get(roomId);
+    const room = await getRoom(roomId);
     if (room) {
-        res.json({ ...room, users: [...room.users] });  
+        const users = await getUsersInRoom(roomId);
+        res.json({ ...room, users });  
     } else {
         res.status(404).json({ error: "Room not found" });
     }

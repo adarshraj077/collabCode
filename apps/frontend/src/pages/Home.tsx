@@ -9,7 +9,7 @@ export default function Home() {
 
     const createRoom = async()=>{
          try{
-            const res=await axios.post("http://localhost:3000/api/rooms");
+            const res=await axios.post(import.meta.env.VITE_BACKEND_URL+"/rooms");
             const nextRoomId = res.data.id;
 
             if (!nextRoomId) {

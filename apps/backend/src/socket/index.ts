@@ -1,8 +1,18 @@
 import { Server } from "socket.io";
 import runCode from "../utils/runCode";
 import type { Server as HttpServer } from "node:http";
-import { rooms, runningRooms } from "@collabcode/shared";
-
+import {
+  getRoom,
+  updateRoom,
+  addUserToRoom,
+  removeUserFromRoom,
+  getNoOfUsers,
+  ADDrunningRooms,
+  isRoomRunning,
+  deleteFromRunningRooms,
+  getUsersInRoom,
+  hasUserInRoom
+} from "../service/redis/room";
 export default function setupSocket(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
@@ -14,15 +24,15 @@ export default function setupSocket(httpServer: HttpServer) {
     console.log("client connected:", socket.id);
 
     socket.on("run-code", async ({ roomId }) => {
-      if (runningRooms.has(roomId)) {
+      if (await isRoomRunning(roomId)) {
         socket.emit("code-result", { error: "Already running" });
         return;
       }
 
-      runningRooms.add(roomId);
+     await  ADDrunningRooms(roomId);
 
       try {
-        const room = rooms.get(roomId);
+        const room = await getRoom(roomId);
         if (!room) {
           socket.emit("code-result", { error: "Room not found" });
           return;
@@ -35,19 +45,18 @@ export default function setupSocket(httpServer: HttpServer) {
           error: err instanceof Error ? err.message : String(err),
         });
       } finally {
-        runningRooms.delete(roomId);
+        await deleteFromRunningRooms(roomId);
       }
     });
 
-    socket.on("code-change", ({ roomId, code }) => {
+    socket.on("code-change", async ({ roomId, code }) => {
       try {
-        const room = rooms.get(roomId);
+        const room = await updateRoom(roomId, (r) => { r.code = code; });
         if (!room) {
           socket.emit("code-update", { error: "Room not found" });
           return;
         }
 
-        room.code = code;
         socket.to(roomId).emit("code-update", { code });
       } catch (err) {
         socket.emit("code-update", {
@@ -56,15 +65,14 @@ export default function setupSocket(httpServer: HttpServer) {
       }
     });
 
-    socket.on("language-change", ({ roomId, language }) => {
+    socket.on("language-change", async ({ roomId, language }) => {
       try {
-        const room = rooms.get(roomId);
+        const room = await updateRoom(roomId, (r) => { r.language = language; });
         if (!room) {
           socket.emit("language-update", { error: "Room not found" });
           return;
         }
 
-        room.language = language;
         socket.to(roomId).emit("language-update", { language });
       } catch (err) {
         socket.emit("language-update", {
@@ -73,47 +81,55 @@ export default function setupSocket(httpServer: HttpServer) {
       }
     });
 
-    socket.on("join-room", (roomId: string) => {
-      const room = rooms.get(roomId);
+    socket.on("join-room", async (roomId: string) => {
+      const room = await getRoom(roomId);
       if (!room) {
         socket.emit("error", { message: "Room not found" });
         return;
       }
 
       socket.data.roomId = roomId;
-      room.users.add(socket.id);
+      await addUserToRoom(roomId, socket.id);
       socket.join(roomId);
 
-      // Send current state to the joining user
-      socket.emit("room-state", { ...room, users: [...room.users] });
+      const users = await getUsersInRoom(roomId);
+      socket.emit("room-state", { ...room,  users });
+    
+
+
+io.to(roomId).emit("room-users", {
+  count: await getNoOfUsers(roomId),
+});
 
       // Notify everyone else in the room
       socket.to(roomId).emit("user-joined", {
         userId: socket.id,
-        count: room.users.size,
+        count: await getNoOfUsers(roomId),
       });
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
       console.log("client disconnected:", socket.id);
 
-      rooms.forEach((room, roomId) => {
-        if (room.users.has(socket.id)) {
-          room.users.delete(socket.id);
+      const roomId = socket.data.roomId;
+      if (roomId) {
+        const hasUser = await hasUserInRoom(roomId, socket.id);
+        if (hasUser) {
+          await removeUserFromRoom(roomId, socket.id);
+
+          const count = await getNoOfUsers(roomId);
 
           // Notify remaining users
           io.to(roomId).emit("user-left", {
             userId: socket.id,
-            count: room.users.size,
+            count
           });
 
-          // Keep room data alive across refreshes/reconnects.
-          // If the room becomes empty, we do not delete it immediately.
-          if (room.users.size === 0) {
-            runningRooms.delete(roomId);
-          }
+          io.to(roomId).emit("room-users", {
+            count
+          });
         }
-      });
+      }
     });
   });
 

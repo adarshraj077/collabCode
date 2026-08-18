@@ -45,16 +45,11 @@ package main
 import "fmt"
 
 func main() {
+    // sample code
     fmt.Println("Hello, World!")
 
-    sum := add(5, 3)
-
-    fmt.Printf("5 + 3 = %d\n", sum)
 }
-
-func add(a, b int) int {
-    return a + b
-}`,
+`,
 };
 
 export default defaultCodeSnippets;
