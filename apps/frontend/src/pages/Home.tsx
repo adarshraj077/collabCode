@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function Home() {
     const [roomId, setRoomId] = useState("");
     const navigate=useNavigate();
+    console.log(import.meta.env.VITE_BACKEND_URL);
 
     const createRoom = async()=>{
          try{

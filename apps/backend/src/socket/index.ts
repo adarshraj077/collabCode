@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import runCode from "../utils/runCode";
+import { verifyJWT } from "../utils/jwt";
 import type { Server as HttpServer } from "node:http";
 import {
   getRoom,
@@ -19,6 +20,14 @@ export default function setupSocket(httpServer: HttpServer) {
       origin: "http://localhost:5173",
     },
   });
+
+  io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  const user = verifyJWT(token);
+  if (!user) return next(new Error('Unauthorized'));
+  socket.data.user = user; // now available in all events
+  next();
+});
 
   io.on("connection", (socket) => {
     console.log("client connected:", socket.id);
