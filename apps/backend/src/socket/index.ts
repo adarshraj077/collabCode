@@ -14,6 +14,7 @@ import {
   getUsersInRoom,
   hasUserInRoom
 } from "../service/redis/room";
+
 export default function setupSocket(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
@@ -24,7 +25,12 @@ export default function setupSocket(httpServer: HttpServer) {
   io.use((socket, next) => {
   const token = socket.handshake.auth.token;
   const user = verifyJWT(token);
-  if (!user) return next(new Error('Unauthorized'));
+  if (!user) {
+      console.log(token)
+      console.log("Invalid token, disconnecting socket:", token);
+      return next(new Error("Authentication error"));
+  }
+  
   socket.data.user = user; // now available in all events
   next();
 });

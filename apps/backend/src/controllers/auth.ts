@@ -77,6 +77,7 @@ export async function register(req: Request, res: Response) {
     return res.status(500).json({
       success: false,
       message: "An unexpected error occurred. Please try again later.",
+      errors: err instanceof Error ? err.message : "Unknown error",
     });
   }
 }
@@ -108,7 +109,7 @@ export async function login(req: Request, res: Response) {
     // console.log("env",process.env.JWT_SECRET)
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
-      expiresIn: "1h",
+      expiresIn: "5h",
     });
     res.cookie("token", token, {
       httpOnly: true,

@@ -5,18 +5,45 @@ import socket from "../socket";
 import { useDebouncedCallback } from "use-debounce";
 import defaultCodeSnippets from "../utils/defaultSnippets";
 import normalizeLanguage from "../utils/language";
+import { useNavigate } from "react-router-dom";
 
 
 const LANGUAGES = ["javascript", "typescript", "c", "cpp", "go"];
 
  
 export default function Room() {
+    
     const { roomId: routeRoomId } = useParams<{ roomId: string }>();
     const roomId = routeRoomId ?? localStorage.getItem("roomId") ?? "";
      const [code, setCode] = useState("// start coding...");
      const [language, setLanguage] = useState("javascript");
      const [output, setOutput] = useState("");
      const [usersCount,setUsersCount]=useState(1);
+     const navigate = useNavigate();
+    
+        useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        // Listen for connection errors (like your backend's "Authentication error")
+        const handleConnectError = (err: Error) => {
+             if (err.message === "Authentication error" || err.message === "Unauthorized") {
+                  // The backend rejected our token! Clear it and redirect.
+                  localStorage.removeItem("token");
+                  navigate("/login");
+             }
+        };
+
+        socket.on("connect_error", handleConnectError);
+
+        return () => {
+             socket.off("connect_error", handleConnectError);
+        }
+    }, [navigate]);
+
     
 
      const lastSentCode = useRef("");  // stores the last code sent to the server

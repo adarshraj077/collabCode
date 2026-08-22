@@ -1,11 +1,11 @@
-import {handelRegister} from "../api/auth"
-
-
+import RegisterForm from "../components/register";
 
 function Register() {
    
     return (
-      <div>Register</div>
+      <>
+      <RegisterForm />
+      </>
     )
     }
 
