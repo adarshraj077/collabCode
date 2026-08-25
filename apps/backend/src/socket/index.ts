@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import runCode from "../utils/runCode";
 import { verifyJWT } from "../utils/jwt";
 import type { Server as HttpServer } from "node:http";
+import { assignColor } from "../utils/colors";
 import {
   getRoom,
   updateRoom,
@@ -18,7 +19,7 @@ import {
 export default function setupSocket(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: "*",
     },
   });
 
@@ -98,27 +99,27 @@ export default function setupSocket(httpServer: HttpServer) {
 
     socket.on("join-room", async (roomId: string) => {
       const room = await getRoom(roomId);
+
       if (!room) {
         socket.emit("error", { message: "Room not found" });
         return;
       }
 
       socket.data.roomId = roomId;
-      await addUserToRoom(roomId, socket.id);
+      await addUserToRoom(roomId, socket.id, socket.data.user?.username || "Guest", assignColor(socket.data.user.id));
       socket.join(roomId);
 
       const users = await getUsersInRoom(roomId);
-      socket.emit("room-state", { ...room,  users });
-    
-
-
-io.to(roomId).emit("room-users", {
-  count: await getNoOfUsers(roomId),
-});
+      socket.emit("room-state", { ...room, users });
+      io.to(roomId).emit("room-users", {
+        count: await getNoOfUsers(roomId),
+        users
+      });
 
       // Notify everyone else in the room
       socket.to(roomId).emit("user-joined", {
         userId: socket.id,
+        username: socket.data.user?.username || "Guest",
         count: await getNoOfUsers(roomId),
       });
     });
@@ -140,8 +141,10 @@ io.to(roomId).emit("room-users", {
             count
           });
 
+          const users = await getUsersInRoom(roomId);
           io.to(roomId).emit("room-users", {
-            count
+            count,
+            users
           });
         }
       }

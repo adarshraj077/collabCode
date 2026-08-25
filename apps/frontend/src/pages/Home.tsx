@@ -8,9 +8,35 @@ export default function Home() {
     const navigate=useNavigate();
     console.log(import.meta.env.VITE_BACKEND_URL);
 
-    const createRoom = async()=>{
-         try{
-            const res=await axios.post(import.meta.env.VITE_BACKEND_URL+"/rooms");
+    const isTokenValid = () => {
+         const token = localStorage.getItem("token");
+         if (!token) return false;
+         try {
+             const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+             if (payload.exp && payload.exp * 1000 < Date.now()) {
+                 localStorage.removeItem("token"); // clean up expired token
+                 return false;
+             }
+             return true;
+         } catch (e) {
+             return false;
+         }
+    };
+
+    const createRoom = async () => {
+         if (!isTokenValid()) {
+             navigate("/login");
+             return;
+         }
+
+         const token = localStorage.getItem("token");
+         try {
+            const BACKEND_URL = import.meta.env.VITE_BACKEND_URL.replace("localhost", window.location.hostname);
+            const res = await axios.post(BACKEND_URL + "/rooms", {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             const nextRoomId = res.data.id;
 
             if (!nextRoomId) {
@@ -21,12 +47,16 @@ export default function Home() {
             localStorage.setItem("roomId", nextRoomId);
             console.log(nextRoomId);
             navigate(`/room/${nextRoomId}`);
-         }catch(err){
+         } catch(err) {
             console.log(err);
          }
     }
 
-    const joinRoom = ()=>{
+    const joinRoom = () => {
+         if (!isTokenValid()) {
+             navigate("/login");
+             return;
+         }
          if (roomId.trim()) navigate(`/room/${roomId}`);
     }
 

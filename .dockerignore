@@ -1,0 +1,7 @@
+node_modules 
+.git
+.env*
+atlas.env
+apps/backend/tmp
+apps/frontend/tmp
+apps/backend/.env

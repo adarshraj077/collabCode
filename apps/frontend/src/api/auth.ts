@@ -13,8 +13,8 @@ export async function handelRegister(username:string,password:string,email:strin
             password:password,
             email:email
         }
-        const res=await axios.post<ApiResponse>(import.meta.env.VITE_BACKEND_URL+"/auth/register",payload);
-     
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL.replace("localhost", window.location.hostname);
+        const res=await axios.post<ApiResponse>(BACKEND_URL+"/auth/register",payload);
 
         return {
       success: true,
@@ -65,7 +65,8 @@ export async function handelLogin(email:string,password:string){
       email:email,
       password:password
     }
-    const res=await axios.post<ApiResponse<{ token: string }>>(import.meta.env.VITE_BACKEND_URL+"/auth/login",payload);
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL.replace("localhost", window.location.hostname);
+    const res=await axios.post<ApiResponse<{ token: string }>>(BACKEND_URL+"/auth/login",payload);
     if(res.data.success && res.data.data){
       const token = res.data.data.token;
       localStorage.setItem("token", token);

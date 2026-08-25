@@ -8,9 +8,9 @@ import normalizeLanguage from "../utils/language";
 import { useNavigate } from "react-router-dom";
 
 
+
 const LANGUAGES = ["javascript", "typescript", "c", "cpp", "go"];
 
- 
 export default function Room() {
     
     const { roomId: routeRoomId } = useParams<{ roomId: string }>();
@@ -18,8 +18,13 @@ export default function Room() {
      const [code, setCode] = useState("// start coding...");
      const [language, setLanguage] = useState("javascript");
      const [output, setOutput] = useState("");
-     const [usersCount,setUsersCount]=useState(1);
+     const [usersCount, setUsersCount] = useState(1);
+     const [users, setUsers] = useState<{socketId: string, username: string, color: string}[]>([]);
      const navigate = useNavigate();
+
+
+
+
     
         useEffect(() => {
         const token = localStorage.getItem("token");
@@ -61,7 +66,7 @@ export default function Room() {
           socket.emit("join-room", roomId);
         };
 
-        const handleRoomState = (room: { code?: string; language?: string }) => {
+        const handleRoomState = (room: { code?: string; language?: string; users?: any[] }) => {
           const currentLang = normalizeLanguage(room.language || "javascript");
           const defaultCode = defaultCodeSnippets[currentLang] || "// start coding...";
           const initialCode = room.code || defaultCode;
@@ -69,6 +74,10 @@ export default function Room() {
           setCode(initialCode);
           setLanguage(currentLang);
           lastSentCode.current = initialCode;
+
+          if (room.users) {
+            setUsers(room.users);
+          }
 
           if (!room.code) {
             socket.emit("code-change", { roomId, code: initialCode });
@@ -95,10 +104,11 @@ export default function Room() {
         };
       
    
-          const userCount=({ count }: { count: number })=>{
-            // console.log("Users in room:", count);
-            setUsersCount(count++);
-          
+          const userCount = ({ count, users: roomUsers }: { count: number, users?: any[] }) => {
+            setUsersCount(count);
+            if (roomUsers) {
+              setUsers(roomUsers);
+            }
           }
        
 
@@ -109,10 +119,8 @@ export default function Room() {
         socket.on("room-users",userCount)
         if (socket.connected) {
           joinRoom();
-        } else {
-          socket.once("connect", joinRoom);
-
         }
+        socket.on("connect", joinRoom);
 
         return () => {
           socket.off("room-state", handleRoomState);
@@ -159,7 +167,14 @@ const runCode = () => {
 
 
     return (<>
-         <div style={{ display: "flex", flexDirection: "column", gap: 0, height: "100vh", overflow: "hidden" }}>
+         <div 
+           onKeyDownCapture={(e) => {
+             if ((e.ctrlKey || e.metaKey) && e.key === "'") {
+               e.preventDefault();   runCode();
+             }
+           }}
+           style={{ display: "flex", flexDirection: "column", gap: 0, height: "100vh", overflow: "hidden" }}
+         >
    
 <div
   style={{
@@ -260,7 +275,7 @@ const runCode = () => {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: "5px",
+        gap: "0px",
         backgroundColor: "#1b753a",
         color: "#ffffff",
         border: "none",
@@ -290,30 +305,51 @@ const runCode = () => {
     }}
   >
 
-     {usersCount>1?( 
-      <div style={{ display: "inline-flex",
+    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginRight: "12px" }}>
+      {users.map((u) => (
+        <div
+          key={u.socketId}
+          title={u.username}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "26px",
+            height: "26px",
+            borderRadius: "50%",
+            backgroundColor: u.color || "#2cbb5d",
+            color: "#1a1a1a",
+            fontSize: "11px",
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            border: "2px solid #262626"
+          }}
+        >
+          {u.username ? u.username.slice(0, 2) : "?"}
+        </div>
+      ))}
+      <div
+        style={{
+          display: "inline-flex",
           alignItems: "center",
           gap: "6px",
-          color:"wheat",
+          color: "wheat",
           borderRadius: "6px",
-          padding: "4px 10px",
-          fontSize: "12px",}}>
-
-          <span
-            style={{
-              width: "7px",
-              height: "7px",
-              borderRadius: "50%",
-              backgroundColor: "#2cbb5d",
-            }}
-          />
-          <span>Live {usersCount}</span>
-
-       
-          </div>
-
-  ):null}
-
+          padding: "4px 4px",
+          fontSize: "12px",
+        }}
+      >
+        <span
+          style={{
+            width: "7px",
+            height: "7px",
+            borderRadius: "50%",
+            backgroundColor: "#2cbb5d",
+          }}
+        />
+        <span>Live {usersCount}</span>
+      </div>
+    </div>
 
 
     <div

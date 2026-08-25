@@ -1,5 +1,5 @@
 import Redis from "ioredis"
 
-const redis = new Redis("rediss://default:gQAAAAAAAeVGAAIgcDEzM2IyMmU4NmVhZDM0ZjdhYWJiYWMyNjhiOGIzZmY2ZA@leading-toad-124230.upstash.io:6379");
+const redis = new Redis(process.env.REDIS_URL!);
 
 export default redis

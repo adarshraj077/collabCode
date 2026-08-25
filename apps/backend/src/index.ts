@@ -13,7 +13,7 @@ import authRouter from "./routes/auth"
 const app=express()
 
 app.use(cors({
-   origin: "http://localhost:5173",
+   origin: "*",
 }))
 
 app.use(express.json())
@@ -40,6 +40,6 @@ app.use("/api/auth",authRouter)
 
 
 
-server.listen(3000,()=>{
+server.listen(process.env.PORT,()=>{
     console.log("sever has started")
 })
