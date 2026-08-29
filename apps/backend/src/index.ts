@@ -9,11 +9,13 @@ import connectDB from "./config/db"
 import codeRouter from "./routes/code"
 import roomRouter from "./routes/room"
 import authRouter from "./routes/auth"
+import userRouter from "./routes/user"
 
 const app=express()
 
 app.use(cors({
-   origin: "*",
+   origin: "http://localhost:5173",
+    credentials: true,
 }))
 
 app.use(express.json())
@@ -37,7 +39,7 @@ app.get("/health",(req,res)=>{
 app.use("/api/code",codeRouter)
 app.use("/api/rooms",roomRouter)
 app.use("/api/auth",authRouter)
-
+app.use("/api/users",userRouter)
 
 
 server.listen(process.env.PORT,()=>{

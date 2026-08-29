@@ -1,0 +1,18 @@
+.links{
+    height: 100%;
+    display: flex;
+    align-items: center;    
+    cursor: pointer;
+    color:#8896af;
+    transition: color 0.2s ease;
+    font-family: monospace;
+    /* font-size: clamp(14px, 4vw, 16px); */
+    font-size:14px;
+    text-decoration: none;
+  
+}
+
+.links:hover{
+    color: #ff5555d8;
+     /* color:#8896af8f; */
+}

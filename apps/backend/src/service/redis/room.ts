@@ -16,6 +16,7 @@ export async function setRoom(roomId: string, room: Room): Promise<void> {
 export async function addUserToRoom(
   roomId: string,
   socketId: string,
+   userId: string ,
   username: string,
   color: string,
 ): Promise<void> {
@@ -27,7 +28,12 @@ export async function addUserToRoom(
     
     const user=JSON.stringify({ socketId, username, color });
   await redis.sadd(`room:${roomId}:users`, user);
+ await redis.sadd(`user:${userId}:rooms`, roomId); 
   await redis.expire(`room:${roomId}:users`, 60 * 60 * 24); // 24 hours TTL
+}
+
+export async function getRoomsForUser(userId: string): Promise<string[]> {
+    return await redis.smembers(`user:${userId}:rooms`);
 }
 
 export async function removeUserFromRoom(

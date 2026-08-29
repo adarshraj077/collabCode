@@ -1,19 +1,19 @@
 import { Router } from "express";
 import type {Room} from "@collabcode/shared";
-import crypto from "crypto";
+import generateRandomString from "../utils/generateRoomId";
 import {getRoom,setRoom, getUsersInRoom} from "../service/redis/room";
 
 const roomRouter = Router();
 
 roomRouter.post("/",async (req,res)=>{
-    const roomId = crypto.randomUUID().substring(2,15);
+    const roomId = generateRandomString();
     const rawLanguage = req.body?.language ?? "javascript";
     const language = rawLanguage === "js" ? "javascript" : rawLanguage === "ts" ? "typescript" : rawLanguage;
     const room:Room = {
         id:roomId,
         code:"", 
         language,
-        
+        createdAt: new Date().toISOString()
     }
 
     await setRoom(roomId,room)

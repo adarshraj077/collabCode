@@ -12,7 +12,7 @@ export interface Room {
   id: string;
   code: string;
   language: string;
-  
+  createdAt?: string;
 }
 
 export const rooms = new Map<string, Room>();

@@ -106,7 +106,7 @@ export default function setupSocket(httpServer: HttpServer) {
       }
 
       socket.data.roomId = roomId;
-      await addUserToRoom(roomId, socket.id, socket.data.user?.username || "Guest", assignColor(socket.data.user.id));
+      await addUserToRoom(roomId, socket.id,socket.data.user.id ,socket.data.user?.username || "Guest", assignColor(socket.data.user.id));
       socket.join(roomId);
 
       const users = await getUsersInRoom(roomId);
@@ -122,6 +122,32 @@ export default function setupSocket(httpServer: HttpServer) {
         username: socket.data.user?.username || "Guest",
         count: await getNoOfUsers(roomId),
       });
+    });
+
+    socket.on("leave-room", async (roomId: string) => {
+      socket.leave(roomId);
+      if (socket.data.roomId === roomId) {
+        delete socket.data.roomId;
+      }
+      
+      const hasUser = await hasUserInRoom(roomId, socket.id);
+      if (hasUser) {
+        await removeUserFromRoom(roomId, socket.id);
+
+        const count = await getNoOfUsers(roomId);
+
+        // Notify remaining users
+        io.to(roomId).emit("user-left", {
+          userId: socket.id,
+          count
+        });
+
+        const users = await getUsersInRoom(roomId);
+        io.to(roomId).emit("room-users", {
+          count,
+          users
+        });
+      }
     });
 
     socket.on("disconnect", async () => {

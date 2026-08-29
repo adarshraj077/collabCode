@@ -113,7 +113,7 @@ export async function login(req: Request, res: Response) {
     });
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "lax",
       maxAge: 3600000,
     });
     return res.status(200).json({

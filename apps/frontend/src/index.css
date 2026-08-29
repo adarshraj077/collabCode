@@ -1,4 +1,11 @@
 body{
     padding: 0;
     margin: 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
 }

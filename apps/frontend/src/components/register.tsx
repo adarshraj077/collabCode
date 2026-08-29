@@ -8,9 +8,11 @@ export const RegisterForm = () => {
     email: "",
     password: "",
   });
+  const [hasError, setHasError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasError(false); // Clear error on typing
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -20,9 +22,11 @@ export const RegisterForm = () => {
     console.log("Registration Payload:", formData);
     const result=await handelRegister(formData.username, formData.password, formData.email)
     if(result.success){
+        setHasError(false);
         console.log("Registration successful:", result.data);
         navigate("/login");
     }else{
+        setHasError(true);
         console.error("Registration failed:", result.message, result.errors);
     }
     
@@ -31,7 +35,14 @@ export const RegisterForm = () => {
 
   return (
     <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.card}>
+      <div 
+        onClick={() => navigate("/")} 
+        style={{ position: "absolute", top: "30px", left: "30px", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px", color: "#8b949e", fontSize: "14px", fontFamily: "monospace" }}
+      >
+        <img src="/arrow_back.svg" alt="Back" width="24" height="24" style={{ filter: "invert(0.6)" }} />
+        <span>Back to Home</span>
+      </div>
+      <form onSubmit={handleSubmit} style={{ ...styles.card, ...(hasError ? { border: "2px solid #ff5555db", transition: "border 0.2s ease" } : { transition: "border 0.2s ease" }) }}>
         <h2 style={styles.heading}>Create an Account</h2>
 
         <div style={styles.inputGroup}>
@@ -87,7 +98,7 @@ export const RegisterForm = () => {
         </button>
          <p style={{ marginTop: "17px", fontSize: "14px", textAlign: "center" }}>
  Already have an account?{" "}
-  <a href="/login" style={{ color: "#238636",textDecoration: "none" }}>
+  <a href="/login" style={{ color: "#ff5555b8",textDecoration: "none" }}>
     sign in here
   </a>
 </p>
@@ -102,14 +113,14 @@ const styles: Record<string, React.CSSProperties> = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#0d1117",
+    backgroundColor: "#191b20",
     color: "#c9d1d9",
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     padding: "20px",
     boxSizing: "border-box",
   },
   card: {
-    backgroundColor: "#161b22",
+    backgroundColor: "#191b20",
     border: "1px solid #30363d",
     borderRadius: "8px",
     padding: "32px",
@@ -136,7 +147,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 500,
   },
   input: {
-    backgroundColor: "#0d1117",
+    backgroundColor: "#191b20",
     border: "1px solid #30363d",
     borderRadius: "6px",
     padding: "10px 12px",
@@ -149,7 +160,7 @@ const styles: Record<string, React.CSSProperties> = {
   button: {
     width: "100%",
     marginTop: "12px",
-    backgroundColor: "#238636",
+    backgroundColor: "#ff5555db",
     color: "#ffffff",
     border: "1px solid rgba(240, 246, 252, 0.1)",
     borderRadius: "6px",

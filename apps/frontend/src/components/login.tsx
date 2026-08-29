@@ -8,9 +8,11 @@ export const LoginForm = () => {
     email: "",
     password: "",
   });
+  const [hasError, setHasError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasError(false); // Clear error on typing
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -19,16 +21,28 @@ export const LoginForm = () => {
     e.preventDefault();
     const result=await handelLogin(formData.email, formData.password)
     if(result.success){
-        navigate("/");
+        setHasError(false);
+        navigate("/dashboard");
+    } else {
+        setHasError(true);
     }
-    
   };
   
 
   return (
+
+    
     <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.card}>
-        <h2 style={styles.heading}>Login Account</h2>
+      <div 
+        onClick={() => navigate("/")} 
+        style={{ position: "absolute", top: "30px", left: "30px", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px", color: "#8b949e", fontSize: "14px", fontFamily: "monospace" }}
+      >
+        <img src="/arrow_back.svg" alt="Back" width="24" height="24" style={{ filter: "invert(0.6)" }} />
+        <span>Back to Home</span>
+      </div>
+
+      <form onSubmit={handleSubmit} style={{ ...styles.card, ...(hasError ? { border: "2px solid #ff5555db", transition: "border 0.2s ease" } : { transition: "border 0.2s ease" }) }}>
+        <h2 style={styles.heading}>welcome back</h2>
 
        
 
@@ -69,7 +83,7 @@ export const LoginForm = () => {
         </button>
        <p style={{ marginTop: "17px", fontSize: "14px", textAlign: "center" }}>
   Don't have an account?{" "}
-  <a href="/register" style={{ color: "#238636",textDecoration: "none" }}>
+  <a href="/register" style={{ color: "#ff5555aa",textDecoration: "none" }}>
     register here
   </a>
 </p>
@@ -84,14 +98,18 @@ const styles: Record<string, React.CSSProperties> = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#0d1117",
+    // backgroundColor: "#0d1117",
+    backgroundColor: "#191b20",
+
     color: "#c9d1d9",
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     padding: "20px",
     boxSizing: "border-box",
   },
   card: {
-    backgroundColor: "#161b22",
+    // backgroundColor: "#161b22",
+    backgroundColor: "#191b20",
+
     border: "1px solid #30363d",
     borderRadius: "8px",
     padding: "32px",
@@ -102,9 +120,10 @@ const styles: Record<string, React.CSSProperties> = {
   heading: {
     margin: "0 0 24px 0",
     fontSize: "20px",
-    fontWeight: 600,
+    fontWeight: 500,
     color: "#f0f6fc",
     textAlign: "center",
+    fontFamily:"monospace"
   },
   inputGroup: {
     marginBottom: "16px",
@@ -118,7 +137,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 500,
   },
   input: {
-    backgroundColor: "#0d1117",
+    backgroundColor: "#191b20",
     border: "1px solid #30363d",
     borderRadius: "6px",
     padding: "10px 12px",
@@ -131,7 +150,8 @@ const styles: Record<string, React.CSSProperties> = {
   button: {
     width: "100%",
     marginTop: "12px",
-    backgroundColor: "#238636",
+    // backgroundColor: "#238636",
+    backgroundColor: "#ff5555db",
     color: "#ffffff",
     border: "1px solid rgba(240, 246, 252, 0.1)",
     borderRadius: "6px",
