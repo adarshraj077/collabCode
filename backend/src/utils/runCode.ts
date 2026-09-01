@@ -3,10 +3,20 @@ import dockerRunner from "./DockerRunner";
 import { LANGUAGES } from "./languages";
 import { wrtiteCode, cleanUP } from "./CodeAndFile";
 
-
+const LANGUAGE_KEY_MAP: Record<string, keyof typeof LANGUAGES> = {
+    javascript: "javascript",
+    js: "javascript",
+    typescript: "typescript",
+    ts: "typescript",
+    c: "c",
+    cpp: "cpp",
+    "c++": "cpp",
+    go: "go"
+};
 
 async function runCode(code:string, language:string){
-    const langConfig = LANGUAGES[language as keyof typeof LANGUAGES];
+    const mappedKey = LANGUAGE_KEY_MAP[language] || (language as keyof typeof LANGUAGES);
+    const langConfig = LANGUAGES[mappedKey];
 
     if (!langConfig) {
         throw new Error(`Unsupported language: ${language}`);

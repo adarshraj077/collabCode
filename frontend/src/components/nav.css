@@ -6,13 +6,48 @@
     color:#8896af;
     transition: color 0.2s ease;
     font-family: monospace;
-    /* font-size: clamp(14px, 4vw, 16px); */
     font-size:14px;
     text-decoration: none;
-  
 }
 
 .links:hover{
     color: #ff5555d8;
-     /* color:#8896af8f; */
+}
+
+.nav-desktop-menu {
+    display: flex;
+    gap: clamp(10px, 3vw, 2rem);
+    color: #667082;
+    align-items: center;
+}
+
+.nav-mobile-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #8896af;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.nav-mobile-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #191b20;
+    padding: 1rem 0;
+    gap: 1rem;
+    border-top: 1px solid #333;
+}
+
+@media (max-width: 768px) {
+    .nav-desktop-menu {
+        display: none !important;
+    }
+    .nav-mobile-btn {
+        display: block;
+    }
+    .nav-mobile-menu.open {
+        display: flex;
+    }
 }

@@ -12,6 +12,7 @@ import roomRouter from "./routes/room"
 import authRouter from "./routes/auth"
 import userRouter from "./routes/user"
 
+
 const app=express()
 
 app.use(cors({
@@ -26,11 +27,6 @@ app.use(cookieParser())
 connectDB()
 const server = http.createServer(app);
 
-
-
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-
 setupSocket(server)
 
 app.get("/health",(req,res)=>{
@@ -43,6 +39,6 @@ app.use("/api/auth",authRouter)
 app.use("/api/users",userRouter)
 
 
-server.listen(env.PORT,()=>{
-    console.log("sever has started")
+server.listen(env.PORT, "0.0.0.0", ()=>{
+    console.log(`server has started on port ${env.PORT}`)
 })

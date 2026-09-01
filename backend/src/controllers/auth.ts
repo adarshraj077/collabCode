@@ -83,6 +83,8 @@ export async function register(req: Request, res: Response) {
   }
 }
 
+
+
 export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   const result = loginSchema.safeParse({ email, password });
@@ -110,12 +112,12 @@ export async function login(req: Request, res: Response) {
     // console.log("env",process.env.JWT_SECRET)
 
     const token = jwt.sign({ id: user._id, username: user.username }, env.JWT_SECRET, {
-      expiresIn: "5h",
+      expiresIn: "24h",
     });
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "lax",
-      maxAge: 3600000,
+      maxAge: 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({
       success: true,

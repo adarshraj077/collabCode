@@ -1,11 +1,13 @@
 import { Router } from "express";
+import type { Request, Response} from "express"
 import type {Room} from "../shared/types";
 import generateRandomString from "../utils/generateRoomId";
 import {getRoom,setRoom, getUsersInRoom} from "../service/redis/room";
+import { limiter } from "../middleware/rateLimiter";
 
 const roomRouter = Router();
 
-roomRouter.post("/",async (req,res)=>{
+roomRouter.post("/",limiter ,async (req: Request,res: Response)=>{
     const roomId = generateRandomString();
     const rawLanguage = req.body?.language ?? "javascript";
     const language = rawLanguage === "js" ? "javascript" : rawLanguage === "ts" ? "typescript" : rawLanguage;
@@ -22,8 +24,8 @@ roomRouter.post("/",async (req,res)=>{
 })
 
 
-roomRouter.get("/rooms/:roomId", async (req, res) => {
-    const roomId = req.params.roomId;
+roomRouter.get("/rooms/:roomId",limiter ,async (req: Request, res: Response) => {
+    const roomId = req.params.roomId as string;
     const room = await getRoom(roomId);
     if (room) {
         const users = await getUsersInRoom(roomId);

@@ -10,7 +10,6 @@ import "./hero.css";
 
 const HeroSection = () => {
 
-
     // const [isPopUpOpen, setIsPopUpOpen] = useState(false);
     const [popUpKey, setPopUpKey] = useState(0);
     const navigate = useNavigate();

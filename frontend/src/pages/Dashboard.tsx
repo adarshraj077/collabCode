@@ -91,7 +91,7 @@ const Dashboard = () => {
           color: "#9c9ea2",
           fontFamily: "monospace",
           fontWeight: "lighter",
-          // borderTop: "1px solid #667082",
+         
         }}
         >
       
@@ -109,7 +109,7 @@ const Dashboard = () => {
       <img src={refreshIcon} alt="refresh" />
     </button>
   </div>
-
+  
 
 </div>
 

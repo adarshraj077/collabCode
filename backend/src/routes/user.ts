@@ -1,10 +1,11 @@
 import express from "express";
 import { getRoomsForUser, getRoom } from "../service/redis/room";
 import { authenticate } from "../middleware/authorization";
+import { limiter } from "../middleware/rateLimiter";
 
 const userRouter = express.Router();
 
-userRouter.get("/dashboard",authenticate,async (req, res) => {
+userRouter.get("/dashboard", limiter, authenticate, async (req, res) => {
   const userId = (req as any).user;
 
   try {

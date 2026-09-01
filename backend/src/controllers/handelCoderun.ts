@@ -9,8 +9,7 @@ const executionSchema = z.object({
 
 
 async function handelrunCode(req :Request,res: Response){
-    //validate the request body
-    
+
    const result= executionSchema.safeParse(req.body)
    if(!result.success){
     return res.status(400).json({ error: result.error });
