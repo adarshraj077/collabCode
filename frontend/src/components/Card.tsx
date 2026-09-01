@@ -21,7 +21,9 @@ const Card = ({
   );
 };
 
-const styles = {
+import type { CSSProperties } from 'react';
+
+const styles: Record<string, CSSProperties> = {
   cardContainer: {
     display: 'flex',
     flexDirection: 'column',

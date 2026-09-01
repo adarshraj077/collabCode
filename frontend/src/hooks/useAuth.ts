@@ -1,9 +1,7 @@
 // src/hooks/useAuth.js
-import { useLocation } from 'react-router-dom';
 
 export const useAuth = () => {
   // Replace this with your actual auth logic (e.g., checking localStorage or global state)
-  const location = useLocation();
   const token=localStorage.getItem("token")
   if(!token){
      return { isAuthenticated: false };

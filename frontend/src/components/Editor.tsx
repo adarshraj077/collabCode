@@ -38,7 +38,6 @@ const EditorComp = ({ code, language, handleCodeChange }: EditorCompProps) => {
           minimap: {
             enabled: true,
             scale: 1.8,
-            autohide: true,
             maxColumn: 200,
             size: "proportional",
             renderCharacters: false,
