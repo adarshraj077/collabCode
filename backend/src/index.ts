@@ -14,6 +14,7 @@ import userRouter from "./routes/user"
 
 
 const app=express()
+app.set('trust proxy', 1)
 
 app.use(cors({
    origin: env.FRONTEND_URL || "http://localhost:5173",
