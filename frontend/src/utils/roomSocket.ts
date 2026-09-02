@@ -15,6 +15,7 @@ export function useRoomSocket(roomId: string) {
   const [output, setOutput] = useState("");
   const lastSentCode = useRef("");
   const currentLanguage = useRef("javascript");
+  const runCodeTimer = useRef<any>(null);
 
   useEffect(() => {
     currentLanguage.current = language;
@@ -44,6 +45,12 @@ export function useRoomSocket(roomId: string) {
   const runCode = () => {
     setOutput("Running...");
     socket.emit("run-code", { roomId });
+    if (runCodeTimer.current) clearTimeout(runCodeTimer.current);
+    runCodeTimer.current = setTimeout(() => {
+      setRoomError("Code execution took too long (10s timeout). Please try again.");
+      setOutput("Execution timed out.");
+      setTimeout(() => setRoomError(""), 5000);
+    }, 10000);
   };
 
   useEffect(() => {
@@ -70,11 +77,16 @@ export function useRoomSocket(roomId: string) {
   useEffect(() => {
     if (!roomId) return;
 
+    const loadTimer = setTimeout(() => {
+      setRoomError("Unable to connect to the room server. Please check your network or try again.");
+    }, 10000);
+
     const joinRoom = () => {
       socket.emit("join-room", roomId);
     };
 
     const handleRoomState = (room: { code?: string; language?: string; users?: any[] }) => {
+      clearTimeout(loadTimer);
       const currentLang = normalizeLanguage(room.language || "javascript");
       const defaultCode = defaultCodeSnippets[currentLang] || "// start coding...";
       const initialCode = room.code || defaultCode;
@@ -107,6 +119,7 @@ export function useRoomSocket(roomId: string) {
     };
 
     const handleCodeResult = (result: { stderr?: string; stdout?: string; error?: string }) => {
+      if (runCodeTimer.current) clearTimeout(runCodeTimer.current);
       const text = result.stdout || result.stderr || result.error || "No output";
       setOutput(String(text).trim() || "No output");
     };
@@ -134,6 +147,7 @@ export function useRoomSocket(roomId: string) {
     socket.on("connect", joinRoom);
 
     return () => {
+      clearTimeout(loadTimer);
       socket.emit("leave-room", roomId);
       socket.off("room-state", handleRoomState);
       socket.off("code-update", handleCodeUpdate);
