@@ -16,7 +16,7 @@
 
 ---
 
-## 🖼️ Preview
+##  Preview
 <!-- Hero Section Image Here: Replace the src below with your actual hero image -->
 <div align="center">
   <img src="./frontend/public/main.png" alt="collabCode Hero" width="85%">
@@ -24,24 +24,24 @@
 
 ---
 
-## 🚀 What is collabCode?
+##  What is collabCode?
 **collabCode** is a robust real-time collaborative code editor that allows developers to write, share, and execute code simultaneously. Designed for technical interviews, pair programming, and remote teaching, it provides a seamless and responsive coding environment directly in the browser.
 
-## ✨ Key Features & Functionality
+##  Key Features & Functionality
 
-### 🤝 Real-Time Collaboration
+###  Real-Time Collaboration
 - **Simultaneous Editing:** Code together with peers in real-time. Changes made by one user are instantly reflected on all other users' screens via WebSockets.
 - **Room Management:** Easily create new coding rooms and share the unique room URL/ID for others to join instantly.
 
-### 💻 Advanced Code Editor
+###  Advanced Code Editor
 - **Syntax Highlighting & Auto-Completion:** Enjoy a professional coding experience with language-specific syntax highlighting, intelligent auto-complete, and familiar IDE shortcuts.
 - **Multiple Languages:** Support for writing and running various programming languages.
 
-### ⚙️ Integrated Code Execution (Console)
+###  Integrated Code Execution (Console)
 - **Run Code on the Fly:** Execute the code directly from the editor without switching windows. 
 - **Real-Time Output:** The built-in console window dynamically captures and displays the compilation and execution output, including errors, in a terminal-like interface.
 
-### 🔐 Secure Authentication & Dashboard
+###  Secure Authentication & Dashboard
 - **User Accounts:** Secure registration and login flows protected by JSON Web Tokens (JWT).
 - **Personal Dashboard:** Logged-in users have access to a personal dashboard to manage and view their previously created coding rooms and sessions.
 
@@ -61,8 +61,8 @@
 2. **Start the backend:**
    ```bash
    cd backend
-   npm install
-   npm run dev
+   bun install
+   bun run dev
    ```
 
 3. **Start the frontend:**
