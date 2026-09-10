@@ -16,6 +16,11 @@ import userRouter from "./routes/user"
 const app=express()
 app.set('trust proxy', 1)
 
+// Public health endpoint (UptimeRobot doesn't require CORS, but this ensures it's globally accessible)
+app.get("/health",(req,res)=>{
+    res.end("server is healthy")
+})
+
 app.use(cors({
    origin: env.FRONTEND_URL || "http://localhost:5173",
     credentials: true,
@@ -30,9 +35,7 @@ const server = http.createServer(app);
 
 setupSocket(server)
 
-app.get("/health",(req,res)=>{
-    res.end("server is healthy")
-})
+
 
 app.use("/api/code",codeRouter)
 app.use("/api/rooms",roomRouter)
