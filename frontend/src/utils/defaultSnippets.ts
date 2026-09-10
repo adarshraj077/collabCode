@@ -50,6 +50,34 @@ func main() {
 
 }
 `,
+  python: `# Python Example
+print("Hello, World!")
+
+# Calculate sum
+def sum(a, b):
+    return a + b
+
+print(f"5 + 3 = {sum(5, 3)}")`,
+
+  rust: `// Rust Example
+fn main() {
+    println!("Hello, World!");
+    
+    // Simple calculation
+    let sum = 5 + 3;
+    println!("5 + 3 = {}", sum);
+}`,
+
+  java: `// Java Example
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        
+        // Simple calculation
+        int sum = 5 + 3;
+        System.out.println("5 + 3 = " + sum);
+    }
+}`
 };
 
 export default defaultCodeSnippets;

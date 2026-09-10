@@ -7,7 +7,7 @@ import Console from "../components/Console";
 import "./room.css";
 
 
-const LANGUAGES = ["javascript", "typescript", "c", "cpp", "go"];
+const LANGUAGES = ["javascript", "typescript", "c", "cpp", "go", "python", "rust", "java"];
 
 export default function Room() {
   const { roomId: routeRoomId } = useParams<{ roomId: string }>();

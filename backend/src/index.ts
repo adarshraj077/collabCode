@@ -40,6 +40,6 @@ app.use("/api/auth",authRouter)
 app.use("/api/users",userRouter)
 
 
-server.listen(env.PORT, "0.0.0.0", ()=>{
+server.listen(Number(env.PORT), "0.0.0.0", ()=>{
     console.log(`server has started on port ${env.PORT}`)
 })

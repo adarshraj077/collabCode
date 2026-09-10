@@ -1,7 +1,5 @@
-import path from "node:path"
-import dockerRunner from "./DockerRunner";
+import e2bRunner from "./e2bRunner";
 import { LANGUAGES } from "./languages";
-import { wrtiteCode, cleanUP } from "./CodeAndFile";
 
 const LANGUAGE_KEY_MAP: Record<string, keyof typeof LANGUAGES> = {
     javascript: "javascript",
@@ -11,7 +9,12 @@ const LANGUAGE_KEY_MAP: Record<string, keyof typeof LANGUAGES> = {
     c: "c",
     cpp: "cpp",
     "c++": "cpp",
-    go: "go"
+    go: "go",
+    python: "python",
+    py: "python",
+    rust: "rust",
+    rs: "rust",
+    java: "java"
 };
 
 async function runCode(code:string, language:string){
@@ -22,9 +25,9 @@ async function runCode(code:string, language:string){
         throw new Error(`Unsupported language: ${language}`);
     }
 
-    const folderPath = await wrtiteCode(code, langConfig.ext);
-    const result = await dockerRunner(path.resolve(folderPath), langConfig);
-    await cleanUP(folderPath);
+    // Execute code directly using E2B microVM
+    const result = await e2bRunner(code, langConfig);
+    
     return result;
 }
 
