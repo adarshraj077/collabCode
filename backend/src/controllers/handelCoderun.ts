@@ -4,7 +4,7 @@ import * as z from "zod";
 
 const executionSchema = z.object({
     code: z.string(),
-    extension: z.enum(["js", "ts", "c", "cpp", "go"]),
+    extension: z.enum(["javascript", "js", "typescript", "ts", "c", "cpp", "c++", "go", "python", "py", "rust", "rs", "java"]),
 });
 
 
