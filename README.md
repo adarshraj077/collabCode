@@ -30,7 +30,7 @@
 <br />
 
 <div align="center">
-  <img src="./frontend/public/main.png" alt="collabCode Preview" width="100%">
+  <video src="./demo.mp4" autoplay loop muted playsinline width="100%"></video>
 </div>
 
 <br />
