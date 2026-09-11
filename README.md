@@ -12,16 +12,17 @@
 
 <br /><br />
 
-# ⚡ collabCode
+# collabCode
 
 ### A real-time collaborative code editor for interviews, pair programming, and teaching.
 
 <p>
-  <a href="#-key-features">Features</a> •
-  <a href="#️-tech-stack">Tech Stack</a> •
-  <a href="#️-installation--setup">Installation</a> •
-  <a href="#-usage">Usage</a> •
-  <a href="#-license">License</a>
+  <a href="#about">About</a> •
+  <a href="#key-features">Features</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#installation--setup">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#license">License</a>
 </p>
 
 </div>
@@ -29,122 +30,88 @@
 <br />
 
 <div align="center">
-  <img src="./frontend/public/main.png" alt="collabCode Preview" width="100%">
+  <img src="./frontend/public/main.png" alt="collabCode Preview" width="85%">
 </div>
 
 <br />
 
 ---
 
-## 📖 About
+## About
 
-**collabCode** is a robust, real-time collaborative code editor that lets developers write, share, and execute code together — instantly. Built for technical interviews, pair programming, and remote teaching, it delivers a seamless, low-latency coding environment right in the browser, with no setup required for participants.
-
----
-
-## ✨ Key Features
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 🔄 Real-Time Collaboration
-- **Simultaneous editing** — changes sync instantly across every connected user via WebSockets
-- **Room management** — spin up a coding room and share the link in one click
-
-### 🖊️ Advanced Code Editor
-- **Syntax highlighting & auto-complete** for a true IDE feel
-- **Multi-language support** for writing and running code in your language of choice
-
-</td>
-<td width="50%" valign="top">
-
-### ▶️ Integrated Code Execution
-- **Run code on the fly** — no context switching, no separate terminal
-- **Live console output** — compilation & runtime errors shown in a terminal-style panel
-
-### 🔐 Auth & Dashboard
-- **JWT-secured accounts** with a clean registration/login flow
-- **Personal dashboard** to manage and revisit past coding rooms
-
-</td>
-</tr>
-</table>
-
-### ⚡ Performance & Architecture
-- **Blazing-fast frontend** — Vite + React + TypeScript for a snappy UI
-- **Scalable backend** — Node.js, Express & Redis handle WebSocket traffic efficiently at scale
-- **Dockerized** — containerized for easy, consistent deployment anywhere
+A real-time collaborative code editor for writing, sharing, and running code together — built for interviews, pair programming, and remote teaching. Runs entirely in the browser, nothing to install.
 
 ---
 
-## 🛠️ Tech Stack
+## Key Features
+
+| Feature | Description |
+|---|---|
+| **Real-Time Collaboration** | Instant sync via WebSockets. Rooms shared in seconds, no account needed to join. |
+| **Code Editor** | Syntax highlighting, auto-complete, multi-language support. |
+| **Integrated Execution** | Run code and view live console output, including errors, in-editor. |
+| **Accounts & Dashboard** | JWT auth with a dashboard to manage past rooms. |
+| **Performance** | Vite + React frontend; Node.js, Express & Redis backend; fully Dockerized. |
+
+---
+
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React, TypeScript, Vite |
-| **Backend** | Node.js, Express.js |
-| **Real-time** | WebSocket |
-| **Database** | MongoDB |
-| **Cache / Pub-Sub** | Redis |
-| **Deployment** | Docker |
+| Frontend | React, TypeScript, Vite |
+| Backend | Node.js, Express.js |
+| Real-time | WebSocket |
+| Database | MongoDB |
+| Cache / Pub-Sub | Redis |
+
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
-### Prerequisites
-- [Bun](https://bun.sh/) installed
-- MongoDB & Redis running locally or accessible remotely
+**Prerequisites**
+[Bun](https://bun.sh/) installed, plus a running MongoDB and Redis instance (local or remote).
 
-### 1. Clone the repository
+**1. Clone the repository**
 ```bash
 git clone https://github.com/adarshraj077/collabCode.git
 cd collabCode
 ```
 
-### 2. Start the backend
+**2. Start the backend**
 ```bash
 cd backend
 bun install
 bun run dev
 ```
 
-### 3. Start the frontend
+**3. Start the frontend**
 ```bash
 cd frontend
 bun install
 bun run dev
 ```
 
-Your app should now be running locally — open the frontend URL in your browser to get started. 🎉
+Open the frontend URL in your browser and you're ready to go.
 
 ---
 
-## 🗺️ Usage
+## Usage
 
-1. Sign up or log in to your account
-2. Create a new room from your dashboard
-3. Share the room link with your collaborators
-4. Start coding together in real time — run code and see output instantly
+. Share the room link with your collaborators
+. Code together in real time, and run it to see output instantly
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions, issues, and feature requests are welcome!
-Feel free to check the [issues page](https://github.com/adarshraj077/collabCode/issues) or open a pull request.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Contributions and feature requests are welcome. Check the [issues page](https://github.com/adarshraj077/collabCode/issues) or open a pull request.
 
 ---
+
+<br />
 
 <div align="center">
-
-**Built with ❤️ for developers.**
-
+Built for developers.
 </div>
