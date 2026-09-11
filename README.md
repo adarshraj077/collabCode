@@ -30,7 +30,7 @@
 <br />
 
 <div align="center">
-  <video src="https://github.com/adarshraj077/collabCode/raw/main/demo.mp4" autoplay loop muted width="100%"></video>
+  <video src="demo.mp4" autoplay loop muted></video>
 </div>
 
 <br />
