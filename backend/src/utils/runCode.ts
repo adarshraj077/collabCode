@@ -25,7 +25,7 @@ async function runCode(code:string, language:string){
         throw new Error(`Unsupported language: ${language}`);
     }
 
-    // Execute code directly using E2B microVM
+    // execute the code using e2b 
     const result = await e2bRunner(code, langConfig);
     
     return result;

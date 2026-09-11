@@ -9,10 +9,10 @@ export default async function e2bRunner(code: string, langConfig: langConfig): P
     let exitcode: number | null = null;
     let timeout = false;
 
-    // Retrieve the API key from environment variables
+    
     const apiKey = process.env.e2b_key || process.env.E2B_API_KEY;
 
-    // Create a new E2B Sandbox using our custom environment with all languages pre-installed
+   // collabcode-env is a custom template that has all the required dependencies pre-installed for the supported languages.
     const sandbox = await Sandbox.create({ template: 'collabcode-env', apiKey });
 
     try {
@@ -54,6 +54,7 @@ export default async function e2bRunner(code: string, langConfig: langConfig): P
         await sandbox.kill();
     }
 
+    // returing in the type of Runresult interface
     return {
         stdout,
         stderr,

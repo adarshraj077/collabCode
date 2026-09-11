@@ -32,7 +32,7 @@ export default function setupSocket(httpServer: HttpServer) {
       return next(new Error("Authentication error"));
   }
   
-  socket.data.user = user; // now available in all events
+  socket.data.user = user; 
   next();
 });
 

@@ -1,76 +1,150 @@
 <div align="center">
 
-  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React" />
-  <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/express.js-%23000000.svg?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
-  <img src="https://img.shields.io/badge/websocket-%23000000.svg?style=for-the-badge&logo=socket.io&logoColor=white" alt="WebSocket" />
-  <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" />
-  <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
-  <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React" />
+<img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+<img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+<img src="https://img.shields.io/badge/express.js-%23000000.svg?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
+<img src="https://img.shields.io/badge/websocket-%23000000.svg?style=for-the-badge&logo=socket.io&logoColor=white" alt="WebSocket" />
+<img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" />
+<img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+<img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+<img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
 
-  <h1>collabCode</h1>
-  <p>An online code editor for interviews, troubleshooting, teaching & more...</p>
+<br /><br />
+
+# ⚡ collabCode
+
+### A real-time collaborative code editor for interviews, pair programming, and teaching.
+
+<p>
+  <a href="#-key-features">Features</a> •
+  <a href="#️-tech-stack">Tech Stack</a> •
+  <a href="#️-installation--setup">Installation</a> •
+  <a href="#-usage">Usage</a> •
+  <a href="#-license">License</a>
+</p>
+
 </div>
 
----
+<br />
 
-##  Preview
-<!-- Hero Section Image Here: Replace the src below with your actual hero image -->
 <div align="center">
-  <img src="./frontend/public/main.png" alt="collabCode Hero" width="100%">
+  <img src="./frontend/public/main.png" alt="collabCode Preview" width="100%">
 </div>
 
----
-
-##  What is collabCode?
-**collabCode** is a robust real-time collaborative code editor that allows developers to write, share, and execute code simultaneously. Designed for technical interviews, pair programming, and remote teaching, it provides a seamless and responsive coding environment directly in the browser.
-
-##  Key Features & Functionality
-
-###  Real-Time Collaboration
-- **Simultaneous Editing:** Code together with peers in real-time. Changes made by one user are instantly reflected on all other users' screens via WebSockets.
-- **Room Management:** Easily create new coding rooms and share the unique room URL/ID for others to join instantly.
-
-###  Advanced Code Editor
-- **Syntax Highlighting & Auto-Completion:** Enjoy a professional coding experience with language-specific syntax highlighting, intelligent auto-complete, and familiar IDE shortcuts.
-- **Multiple Languages:** Support for writing and running various programming languages.
-
-###  Integrated Code Execution (Console)
-- **Run Code on the Fly:** Execute the code directly from the editor without switching windows. 
-- **Real-Time Output:** The built-in console window dynamically captures and displays the compilation and execution output, including errors, in a terminal-like interface.
-
-###  Secure Authentication & Dashboard
-- **User Accounts:** Secure registration and login flows protected by JSON Web Tokens (JWT).
-- **Personal Dashboard:** Logged-in users have access to a personal dashboard to manage and view their previously created coding rooms and sessions.
-
-### ⚡ Blazing Fast Performance
-- **Optimized Frontend:** Powered by Vite, React, and TypeScript for an incredibly fast and snappy user interface.
-- **Scalable Backend:** Node.js, Express, and Redis handle WebSocket connections efficiently, ensuring smooth real-time syncing even with high traffic. 
-- **Dockerized:** Easily deployable and scalable containerized architecture.
-
-## 🛠️ Installation & Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/adarshraj077/collabCode.git
-   cd collabCode
-   ```
-
-2. **Start the backend:**
-   ```bash
-   cd backend
-   bun install
-   bun run dev
-   ```
-
-3. **Start the frontend:**
-   ```bash
-   cd frontend
-   bun install
-   bun run dev
-   ```
+<br />
 
 ---
-*Built with ❤️ for developers.*
+
+## 📖 About
+
+**collabCode** is a robust, real-time collaborative code editor that lets developers write, share, and execute code together — instantly. Built for technical interviews, pair programming, and remote teaching, it delivers a seamless, low-latency coding environment right in the browser, with no setup required for participants.
+
+---
+
+## ✨ Key Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🔄 Real-Time Collaboration
+- **Simultaneous editing** — changes sync instantly across every connected user via WebSockets
+- **Room management** — spin up a coding room and share the link in one click
+
+### 🖊️ Advanced Code Editor
+- **Syntax highlighting & auto-complete** for a true IDE feel
+- **Multi-language support** for writing and running code in your language of choice
+
+</td>
+<td width="50%" valign="top">
+
+### ▶️ Integrated Code Execution
+- **Run code on the fly** — no context switching, no separate terminal
+- **Live console output** — compilation & runtime errors shown in a terminal-style panel
+
+### 🔐 Auth & Dashboard
+- **JWT-secured accounts** with a clean registration/login flow
+- **Personal dashboard** to manage and revisit past coding rooms
+
+</td>
+</tr>
+</table>
+
+### ⚡ Performance & Architecture
+- **Blazing-fast frontend** — Vite + React + TypeScript for a snappy UI
+- **Scalable backend** — Node.js, Express & Redis handle WebSocket traffic efficiently at scale
+- **Dockerized** — containerized for easy, consistent deployment anywhere
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React, TypeScript, Vite |
+| **Backend** | Node.js, Express.js |
+| **Real-time** | WebSocket |
+| **Database** | MongoDB |
+| **Cache / Pub-Sub** | Redis |
+| **Deployment** | Docker |
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- [Bun](https://bun.sh/) installed
+- MongoDB & Redis running locally or accessible remotely
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/adarshraj077/collabCode.git
+cd collabCode
+```
+
+### 2. Start the backend
+```bash
+cd backend
+bun install
+bun run dev
+```
+
+### 3. Start the frontend
+```bash
+cd frontend
+bun install
+bun run dev
+```
+
+Your app should now be running locally — open the frontend URL in your browser to get started. 🎉
+
+---
+
+## 🗺️ Usage
+
+1. Sign up or log in to your account
+2. Create a new room from your dashboard
+3. Share the room link with your collaborators
+4. Start coding together in real time — run code and see output instantly
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to check the [issues page](https://github.com/adarshraj077/collabCode/issues) or open a pull request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**Built with ❤️ for developers.**
+
+</div>
