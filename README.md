@@ -19,7 +19,7 @@
 ##  Preview
 <!-- Hero Section Image Here: Replace the src below with your actual hero image -->
 <div align="center">
-  <img src="./frontend/public/main.png" alt="collabCode Hero" width="85%">
+  <img src="./frontend/public/main.png" alt="collabCode Hero" width="100%">
 </div>
 
 ---
