@@ -30,7 +30,7 @@
 <br />
 
 <div align="center">
-  <img src="./frontend/public/main.png" alt="collabCode Preview" width="85%">
+  <img src="./frontend/public/main.png" alt="collabCode Preview" width="100%">
 </div>
 
 <br />
@@ -51,7 +51,7 @@ A real-time collaborative code editor for writing, sharing, and running code tog
 | **Code Editor** | Syntax highlighting, auto-complete, multi-language support. |
 | **Integrated Execution** | Run code and view live console output, including errors, in-editor. |
 | **Accounts & Dashboard** | JWT auth with a dashboard to manage past rooms. |
-| **Performance** | Vite + React frontend; Node.js, Express & Redis backend; fully Dockerized. |
+| **Performance** | Vite + React frontend; Node.js, Express & Redis backend;  |
 
 ---
 
